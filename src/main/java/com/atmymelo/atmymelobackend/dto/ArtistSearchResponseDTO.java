@@ -1,6 +1,6 @@
 package com.atmymelo.atmymelobackend.dto;
 
-public record ArtistSearchDTO(
+public record ArtistSearchResponseDTO(
         String id,
         String name,
         String country,

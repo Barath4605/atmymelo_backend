@@ -1,10 +1,13 @@
 package com.atmymelo.atmymelobackend.entity;
 
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users",
@@ -14,11 +17,13 @@ import java.time.LocalDateTime;
         })
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class User {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     private String username;
 
@@ -26,7 +31,8 @@ public class User {
 
     private String passwordHash;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private ROLE role;
 
     private LocalDateTime createdAt;
 

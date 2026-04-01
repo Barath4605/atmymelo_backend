@@ -1,8 +1,9 @@
-package com.atmymelo.atmymelobackend.service;
+package com.atmymelo.atmymelobackend.service.ArtistService;
 
-import com.atmymelo.atmymelobackend.dto.ArtistSearchDTO;
+import com.atmymelo.atmymelobackend.dto.ArtistSearchResponseDTO;
 import com.atmymelo.atmymelobackend.entity.Artist;
 import com.atmymelo.atmymelobackend.repository.ArtistRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,17 +14,17 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ArtistService {
+
+    @Value("${fanart.api.key}")
+    private String FANART_API_KEY;
 
     private final ArtistRepository artistRepository;
     private final RestTemplate restTemplate;
 
-    public ArtistService(ArtistRepository artistRepository) {
-        this.artistRepository = artistRepository;
-        this.restTemplate = new RestTemplate();
-    }
-
-    public List<ArtistSearchDTO> searchArtists(String query) {
+    //  SEARCHING ALL THE ARTISTS USING THE MB API
+    public List<ArtistSearchResponseDTO> searchArtists(String query) {
 
         String url = "https://musicbrainz.org/ws/2/artist/?query=" + query + "&fmt=json";
 
@@ -39,11 +40,12 @@ public class ArtistService {
 
                     String imageUrl = fetchFanartImage(id);
 
-                    return new ArtistSearchDTO(id, name, country, imageUrl);
+                    return new ArtistSearchResponseDTO(id, name, country, imageUrl);
                 })
                 .toList();
     }
 
+    // OPENING THE DEDICATED ARTIST PAGE WITH THE HELP OF MBID FETCHED FROM THE SEARCH RESULTS
     public Artist getArtistByMbid(String mbid) {
 
         Optional<Artist> existing = artistRepository.findById(mbid);
@@ -76,9 +78,8 @@ public class ArtistService {
         return artistRepository.save(artist);
     }
 
-    @Value("${fanart.api.key}")
-    private String FANART_API_KEY;
-
+    // HELPER FUNCTIONS
+    // GETTING THE FANART IMAGES FOR THE ARTIST FROM THE MBID
     private String fetchFanartImage(String mbid) {
 
         try {
@@ -100,7 +101,6 @@ public class ArtistService {
                         .orElse(null);
             }
 
-            // 🔹 2. fallback → album covers
             Map<String, Object> albums = (Map<String, Object>) response.get("albums");
 
             if (albums != null && !albums.isEmpty()) {
@@ -124,6 +124,7 @@ public class ArtistService {
 
         return null;
     }
+
     private int parseLikes(Object likes) {
         try {
             return Integer.parseInt((String) likes);

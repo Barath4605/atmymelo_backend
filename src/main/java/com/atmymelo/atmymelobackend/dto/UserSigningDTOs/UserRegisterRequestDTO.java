@@ -1,0 +1,16 @@
+package com.atmymelo.atmymelobackend.dto.UserSigningDTOs;
+
+
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+public record UserRegisterRequestDTO(
+        @NotNull(message = "Username cannot be Empty.")
+        String username,
+        @Email(message = "Enter a valid Email address.")
+        String email,
+        @Size(min = 6, max = 18, message = "Password must be of size 6 - 18 characters.")
+        String password
+) {
+}

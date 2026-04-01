@@ -29,9 +29,11 @@ public class UserAlbum {
 
     private Integer rating;
 
-    private Boolean isFavorite;
+    @Column(nullable = false)
+    private Boolean isFavorite = false;
 
-    private Boolean inQueue;
+    @Column(nullable = false)
+    private Boolean inQueue = false;
 
     private LocalDateTime createdAt;
 
