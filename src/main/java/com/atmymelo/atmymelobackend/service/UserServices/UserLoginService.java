@@ -1,8 +1,8 @@
 package com.atmymelo.atmymelobackend.service.UserServices;
 
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomIllegalArgumentException;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserLoginRequestDTO;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserLoginResponseDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginRequestDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginResponseDTO;
 import com.atmymelo.atmymelobackend.entity.User;
 import com.atmymelo.atmymelobackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,6 +26,6 @@ public class UserLoginService {
         }
 
 
-        return new UserLoginResponseDTO("Login Success", user.getUsername());
+        return new UserLoginResponseDTO("Login Success", user.getUsername(), user.getId());
     }
 }

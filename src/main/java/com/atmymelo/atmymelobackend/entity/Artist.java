@@ -18,6 +18,8 @@ public class Artist {
     @Id
     private String id; // external API id
 
+    private String tadbArtistId;
+
     private String name;
 
     @Column(columnDefinition = "TEXT")

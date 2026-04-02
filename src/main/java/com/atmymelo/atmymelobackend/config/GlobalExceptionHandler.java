@@ -1,6 +1,7 @@
 package com.atmymelo.atmymelobackend.config;
 
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomIllegalArgumentException;
+import com.atmymelo.atmymelobackend.config.Exceptions.CustomIllegalStateException;
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomRuntimeException;
 import com.atmymelo.atmymelobackend.dto.ExceptionDTO.ErrorResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,14 @@ public class GlobalExceptionHandler {
     public ErrorResponseDTO handleInvalidCredentialsException(CustomIllegalArgumentException ex) {
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)
+                .body(new ErrorResponseDTO(ex.getMessage())).getBody();
+    }
+
+    @ExceptionHandler(CustomIllegalStateException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    public ErrorResponseDTO handleAlbumReviewedException(CustomIllegalStateException ex) {
+        return ResponseEntity
+                .status(HttpStatus.CONFLICT)
                 .body(new ErrorResponseDTO(ex.getMessage())).getBody();
     }
 
