@@ -1,10 +1,9 @@
 package com.atmymelo.atmymelobackend.controller.UserController;
 
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserLoginRequestDTO;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserLoginResponseDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginRequestDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginResponseDTO;
 import com.atmymelo.atmymelobackend.service.UserServices.UserLoginService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;

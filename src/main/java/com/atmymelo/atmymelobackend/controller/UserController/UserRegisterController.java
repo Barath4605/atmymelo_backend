@@ -1,12 +1,11 @@
 package com.atmymelo.atmymelobackend.controller.UserController;
 
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserRegisterRequestDTO;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserRegisterResponseDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserRegisterRequestDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserRegisterResponseDTO;
 import com.atmymelo.atmymelobackend.service.UserServices.UserRegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

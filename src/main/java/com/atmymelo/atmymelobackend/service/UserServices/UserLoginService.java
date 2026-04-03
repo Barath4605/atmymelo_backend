@@ -1,10 +1,11 @@
 package com.atmymelo.atmymelobackend.service.UserServices;
 
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomIllegalArgumentException;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserLoginRequestDTO;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserLoginResponseDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginRequestDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginResponseDTO;
 import com.atmymelo.atmymelobackend.entity.User;
 import com.atmymelo.atmymelobackend.repository.UserRepository;
+import com.atmymelo.atmymelobackend.service.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,7 @@ public class UserLoginService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
 
     public UserLoginResponseDTO login(UserLoginRequestDTO dto) {
 
@@ -25,7 +27,8 @@ public class UserLoginService {
             throw new CustomIllegalArgumentException("Invalid credentials");
         }
 
+        String token = jwtService.generateToken(user.getId());
 
-        return new UserLoginResponseDTO("Login Success", user.getUsername());
+        return new UserLoginResponseDTO("Login Success", user.getUsername(), user.getId(), token);
     }
 }

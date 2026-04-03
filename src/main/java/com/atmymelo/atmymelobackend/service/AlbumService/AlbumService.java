@@ -37,7 +37,7 @@ public class AlbumService {
             String url = "https://musicbrainz.org/ws/2/release-group/?query="
                     + encodedQuery
                     + "&type=album"
-                    + "&limit=15"       // fetch a few more before filtering
+                    + "&limit=15"
                     + "&fmt=json";
 
             Map response = restTemplate.getForObject(url, Map.class);
@@ -166,6 +166,7 @@ public class AlbumService {
                         newArtist.setId(artistMbid);
                         newArtist.setName((String) artistData.get("strArtist"));
                         newArtist.setBio((String) artistData.get("strBiography"));
+                        newArtist.setTadbArtistId((String) artistData.get("idArtist"));
                         newArtist.setBackdropUrl((String) artistData.get("strArtistFanart"));
                         newArtist.setLogoUrl((String) artistData.get("strArtistLogo"));
                         newArtist.setPhotoUrl((String) artistData.get("strArtistThumb"));
@@ -183,6 +184,7 @@ public class AlbumService {
         album.setId(mbid);
         album.setTitle((String) data.get("strAlbum"));
         album.setGenre((String) data.get("strGenre"));
+        album.setTadbAlbumId((String) data.get("idAlbum"));
         album.setDescription((String) data.get("strDescription"));
         album.setImageUrl((String) data.get("strAlbumThumb"));
         album.setArtist(artist);

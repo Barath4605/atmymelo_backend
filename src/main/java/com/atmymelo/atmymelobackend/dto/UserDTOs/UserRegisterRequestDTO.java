@@ -1,4 +1,4 @@
-package com.atmymelo.atmymelobackend.dto.UserSigningDTOs;
+package com.atmymelo.atmymelobackend.dto.UserDTOs;
 
 
 import jakarta.validation.constraints.Email;

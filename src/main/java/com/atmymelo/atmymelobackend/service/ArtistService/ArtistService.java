@@ -67,6 +67,7 @@ public class ArtistService {
         Artist artist = new Artist();
         artist.setId(mbid);
         artist.setName((String) data.get("strArtist"));
+        artist.setTadbArtistId((String) data.get("idArtist"));
         artist.setBio((String) data.get("strBiography"));
         artist.setPhotoUrl((String) data.get("strArtistThumb"));
         artist.setLogoUrl((String) data.get("strArtistLogo"));
@@ -78,7 +79,8 @@ public class ArtistService {
         return artistRepository.save(artist);
     }
 
-    // HELPER FUNCTIONS
+    // ====== HELPER FUNCTIONS ======
+
     // GETTING THE FANART IMAGES FOR THE ARTIST FROM THE MBID
     private String fetchFanartImage(String mbid) {
 
@@ -125,6 +127,7 @@ public class ArtistService {
         return null;
     }
 
+    // GETTING ARTISTS BASED ON THEIR LIKES
     private int parseLikes(Object likes) {
         try {
             return Integer.parseInt((String) likes);

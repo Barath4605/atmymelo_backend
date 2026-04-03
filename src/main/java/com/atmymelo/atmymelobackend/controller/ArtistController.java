@@ -17,11 +17,14 @@ public class ArtistController {
         this.artistService = artistService;
     }
 
+
+    // ARTIST SEARCH
     @GetMapping("/search")
     public List<ArtistSearchResponseDTO> search(@RequestParam String query) {
         return artistService.searchArtists(query);
     }
 
+    // ARTIST PAGE
     @GetMapping("/artist/{mbid}")
     public Artist getArtist(@PathVariable String mbid) {
         return artistService.getArtistByMbid(mbid);

@@ -1,8 +1,8 @@
 package com.atmymelo.atmymelobackend.service.UserServices;
 
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomRuntimeException;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserRegisterRequestDTO;
-import com.atmymelo.atmymelobackend.dto.UserSigningDTOs.UserRegisterResponseDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserRegisterRequestDTO;
+import com.atmymelo.atmymelobackend.dto.UserDTOs.UserRegisterResponseDTO;
 import com.atmymelo.atmymelobackend.entity.ROLE;
 import com.atmymelo.atmymelobackend.entity.User;
 import com.atmymelo.atmymelobackend.repository.UserRepository;
