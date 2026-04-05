@@ -119,6 +119,9 @@ public class AlbumService {
 
             if (userAlbum != null) {
                 rating = userAlbum.getRating();
+                if(rating == null) {
+                    rating = 0;
+                }
                 isFavorite = userAlbum.getIsFavorite();
                 inQueue = userAlbum.getInQueue();
             }

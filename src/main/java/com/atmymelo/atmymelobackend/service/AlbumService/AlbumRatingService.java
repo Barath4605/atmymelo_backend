@@ -26,26 +26,34 @@ public class AlbumRatingService {
     private final AlbumRepository albumRepository;
     private final UserRepository userRepository;
 
-    // RATING THE ALBUM , FROM 1 to 5
-    public RatingResponseDTO rate(RatingRequestDTO rateDto, UUID userId, String mbid) {
+    private UserAlbum getOrCreate(UUID userId, String mbid) {
 
         UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
-        if (userAlbum == null) {
 
+        if (userAlbum == null) {
             userAlbum = new UserAlbum();
 
             Album album = albumRepository.findById(mbid)
                     .orElseThrow(() -> new RuntimeException("Album not found"));
 
-            userAlbum.setAlbum(album);
-
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
+            userAlbum.setAlbum(album);
             userAlbum.setUser(user);
+            userAlbum.setRating(0);
+            userAlbum.setIsFavorite(false);
+            userAlbum.setInQueue(false);
         }
 
-        if(rateDto.rating() > 0) userAlbum.setInQueue(false);
+        return userAlbum;
+    }
+
+    public RatingResponseDTO rate(RatingRequestDTO rateDto, UUID userId, String mbid) {
+
+        UserAlbum userAlbum = getOrCreate(userId, mbid);
+
+        if (rateDto.rating() > 0) userAlbum.setInQueue(false);
 
         userAlbum.setRating(rateDto.rating());
 
@@ -54,53 +62,29 @@ public class AlbumRatingService {
         return new RatingResponseDTO(userAlbum.getAlbum(), userAlbum.getRating());
     }
 
-    // ADDING THE ALBUMS TO FAVORITES
     public FavoriteResponseDTO favorite(FavoriteRequestDTO favDto, UUID userId, String mbid) {
-        UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
 
-        if (userAlbum == null) {
-
-            userAlbum = new UserAlbum();
-
-            Album album = albumRepository.findById(mbid)
-                    .orElseThrow(() -> new RuntimeException("Album not found"));
-
-            userAlbum.setAlbum(album);
-
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-
-            userAlbum.setUser(user);
-        }
+        UserAlbum userAlbum = getOrCreate(userId, mbid);
 
         userAlbum.setIsFavorite(favDto.favorite());
 
-        if(userAlbum.getIsFavorite()) userAlbum.setInQueue(false);
+        if (Boolean.TRUE.equals(userAlbum.getIsFavorite())) {
+            userAlbum.setInQueue(false);
+        }
 
         userAlbumRepository.save(userAlbum);
 
         return new FavoriteResponseDTO(userAlbum.getAlbum(), userAlbum.getIsFavorite());
-
     }
 
-    // ADDING ALBUMS TO QUEUE
     public QueueResponseDTO queue(QueueRequestDTO queueDto, UUID userId, String mbid) {
-        UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
 
-        if (userAlbum == null) {
+        UserAlbum userAlbum = getOrCreate(userId, mbid);
 
-            userAlbum = new UserAlbum();
+        boolean isFavorite = Boolean.TRUE.equals(userAlbum.getIsFavorite());
+        int rating = userAlbum.getRating() != null ? userAlbum.getRating() : 0;
 
-            Album album = albumRepository.findById(mbid)
-                    .orElseThrow(() -> new RuntimeException("Album not found"));
-            userAlbum.setAlbum(album);
-
-            User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new RuntimeException("User not found"));
-            userAlbum.setUser(user);
-        }
-
-        if(queueDto.queue() && (userAlbum.getIsFavorite() || userAlbum.getRating() > 0)) {
+        if (queueDto.queue() && (isFavorite || rating > 0)) {
             throw new CustomIllegalStateException("Album has been marked reviewed!");
         }
 
@@ -109,6 +93,5 @@ public class AlbumRatingService {
         userAlbumRepository.save(userAlbum);
 
         return new QueueResponseDTO(userAlbum.getAlbum(), userAlbum.getInQueue());
-
     }
 }
