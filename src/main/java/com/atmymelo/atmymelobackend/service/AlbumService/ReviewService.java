@@ -34,7 +34,7 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
-        return new ReviewResponseDTO(review.getContent(), review.getCreatedAt());
+        return new ReviewResponseDTO(review.getContent(), review.getCreatedAt(), review.getId());
 
     }
 
@@ -64,6 +64,10 @@ public class ReviewService {
                 ))
                 .toList();
 
+    }
+
+    public void deleteReview(UUID reviewId, UUID id) {
+        reviewRepository.deleteById(reviewId);
     }
 
 }

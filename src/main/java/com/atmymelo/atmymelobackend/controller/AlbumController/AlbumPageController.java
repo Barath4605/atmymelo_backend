@@ -63,26 +63,4 @@ public class AlbumPageController {
         return new ResponseEntity<>(albumRatingService.queue(dto, userId, mbid), HttpStatus.OK);
     }
 
-    //REVIEW
-    @PostMapping("/{mbid}/review")
-    public ResponseEntity<ReviewResponseDTO> review(@RequestBody ReviewRequestDTO dto,
-                                                    @RequestHeader("Authorization") String authHeader,
-                                                    @PathVariable String mbid) {
-
-        UUID userId = jwtUtil.extractUserId(authHeader);
-
-        return new ResponseEntity<>(reviewService.review(dto, userId, mbid), HttpStatus.OK);
-    }
-
-    // FETCH ALL REVIEWS
-    @GetMapping("/{mbid}/all-reviews")
-    public ResponseEntity<List<AllReviewResponseDTO>> allReviews(@RequestHeader("Authorization") String authHeader,
-                                                   @PathVariable String mbid) {
-
-        UUID userId = jwtUtil.extractUserId(authHeader);
-        List<AllReviewResponseDTO> reviews = reviewService.allReviews(userId, mbid);
-
-        return ResponseEntity.ok(reviews);
-    }
-
 }
