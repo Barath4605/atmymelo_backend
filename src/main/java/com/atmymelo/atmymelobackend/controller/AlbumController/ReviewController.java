@@ -43,11 +43,25 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
+    // FETCH LAST 3 REVIEWS
+    @GetMapping("/{mbid}/last-3")
+    public ResponseEntity<List<AllReviewResponseDTO>> last5Reviews(@RequestHeader("Authorization") String authHeader,
+                                                                   @PathVariable String mbid) {
+        UUID userId = jwtUtil.extractUserId(authHeader);
+        List<AllReviewResponseDTO> reviews = reviewService.fetchLast3Reviews(userId, mbid);
+
+        return ResponseEntity.ok(reviews);
+    }
+
+
     // DELETE REVIEW
+    @DeleteMapping("/delete-review/{reviewId}")
     public void deleteReview(@RequestHeader("Authorization") String authHeader,
                              @PathVariable UUID reviewId) {
 
         UUID userId = jwtUtil.extractUserId(authHeader);
         reviewService.deleteReview(reviewId,userId);
     }
+
+
 }

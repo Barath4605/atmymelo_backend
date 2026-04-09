@@ -1,10 +1,10 @@
 package com.atmymelo.atmymelobackend.dto.UserDTOs;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record UserRegisterResponseDTO(
+public record UserRegisterResponseDTO (
+        UUID userId,
         String username,
-        String email,
-        UUID uuid
-) {
-}
+        String name
+) {}

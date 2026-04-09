@@ -29,6 +29,6 @@ public class UserLoginService {
 
         String token = jwtService.generateToken(user.getId());
 
-        return new UserLoginResponseDTO("Login Success", user.getUsername(), user.getId(), token);
+        return new UserLoginResponseDTO( user.getUsername(),user.getName(), user.getId(), token);
     }
 }

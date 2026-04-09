@@ -29,13 +29,14 @@ public class UserRegisterService {
 
         user.setUsername(userRegisterRequestDTO.username());
         user.setEmail(userRegisterRequestDTO.email());
+        user.setName(userRegisterRequestDTO.name());
         user.setPasswordHash(passwordEncoder.encode(userRegisterRequestDTO.password()));
         user.setRole(ROLE.USER);
         user.setCreatedAt(LocalDateTime.now());
 
         userRepository.save(user);
 
-        return new UserRegisterResponseDTO(user.getUsername(), user.getEmail(), user.getId());
+        return new UserRegisterResponseDTO(user.getId(), user.getUsername(), user.getName());
     }
 
 }
