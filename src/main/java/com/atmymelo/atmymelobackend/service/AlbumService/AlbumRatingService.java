@@ -16,6 +16,7 @@ import com.atmymelo.atmymelobackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Service
@@ -40,6 +41,7 @@ public class AlbumRatingService {
                     .orElseThrow(() -> new RuntimeException("User not found"));
 
             userAlbum.setAlbum(album);
+            userAlbum.setCreatedAt(LocalDateTime.now());
             userAlbum.setUser(user);
             userAlbum.setRating(0);
             userAlbum.setIsFavorite(false);

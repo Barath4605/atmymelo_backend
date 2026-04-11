@@ -165,6 +165,8 @@ public class AlbumService {
                     if (!artists.isEmpty()) {
                         Map<String, Object> artistData = artists.get(0);
 
+                        // CREATE ARTIST AND STORE THE DATA
+
                         Artist newArtist = new Artist();
                         newArtist.setId(artistMbid);
                         newArtist.setName((String) artistData.get("strArtist"));
@@ -183,12 +185,25 @@ public class AlbumService {
             }
         }
 
+        // CREATE ALBUM AND STORE THE DATA
+
+        String desc = (String) data.get("strDescription");
+        String genre = (String) data.get("strGenre");
+
+        if (desc == null || desc.isBlank()) {
+            desc = "No description available";
+        }
+
+        if (genre == null || genre.isBlank()) {
+            genre = "Other";
+        }
+
         Album album = new Album();
         album.setId(mbid);
         album.setTitle((String) data.get("strAlbum"));
-        album.setGenre((String) data.get("strGenre"));
+        album.setGenre(genre);
         album.setTadbAlbumId((String) data.get("idAlbum"));
-        album.setDescription((String) data.get("strDescription"));
+        album.setDescription(desc);
         album.setImageUrl((String) data.get("strAlbumThumb"));
         album.setArtist(artist);
 
