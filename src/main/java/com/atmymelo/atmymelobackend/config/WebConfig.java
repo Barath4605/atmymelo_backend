@@ -15,7 +15,8 @@ public class WebConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins(
                                 "http://localhost:5173",
-                                "https://atmymelo-frontend.vercel.app"
+                                "https://atmymelo-frontend.vercel.app",
+                                "https://atmymelo-frontend.onrender.com"
                         )
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
