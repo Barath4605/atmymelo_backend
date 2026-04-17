@@ -2,7 +2,6 @@
 FROM maven:3.9-eclipse-temurin-17 AS build
 WORKDIR /app
 COPY . .
-# We already fixed the permissions, but running it through Maven directly is safer in Docker
 RUN mvn clean package -DskipTests
 
 # Stage 2: Run the application
