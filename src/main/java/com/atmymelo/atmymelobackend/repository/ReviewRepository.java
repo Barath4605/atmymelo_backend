@@ -8,5 +8,6 @@ import java.util.UUID;
 
 public interface ReviewRepository extends JpaRepository<Review, UUID> {
     List<Review> findAllByUserIdAndAlbumId(UUID userId, String mbid);
-    List<Review> findTop3ByUserIdAndAlbumIdOrderByCreatedAt(UUID userId, String mbid);
+
+    List<Review> findTop3ByUserIdAndAlbumIdOrderByCreatedAtDesc(UUID userId, String albumId);
 }

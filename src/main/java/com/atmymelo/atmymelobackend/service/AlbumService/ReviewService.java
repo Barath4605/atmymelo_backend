@@ -79,7 +79,7 @@ public class ReviewService {
 
     public List<AllReviewResponseDTO> fetchLast3Reviews(UUID userId, String mbid) {
 
-        List<Review> reviews = reviewRepository.findTop3ByUserIdAndAlbumIdOrderByCreatedAt(userId, mbid);
+        List<Review> reviews = reviewRepository.findTop3ByUserIdAndAlbumIdOrderByCreatedAtDesc(userId, mbid);
 
         return reviews.stream()
                 .map(review -> new AllReviewResponseDTO(

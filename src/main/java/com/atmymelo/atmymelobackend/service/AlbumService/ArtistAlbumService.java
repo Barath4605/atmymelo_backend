@@ -6,12 +6,12 @@ import com.atmymelo.atmymelobackend.entity.Album;
 import com.atmymelo.atmymelobackend.entity.Artist;
 import com.atmymelo.atmymelobackend.repository.AlbumRepository;
 import com.atmymelo.atmymelobackend.repository.ArtistRepository;
+import com.atmymelo.atmymelobackend.service.TadbClient.AudioDbClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -44,7 +44,6 @@ public class ArtistAlbumService {
                 // only real albums
                 .filter(dto -> "album".equalsIgnoreCase(dto.strReleaseFormat()))
 
-                // map DTO → entity
                 .map(dto -> mapToEntity(dto, artist))
 
                 // remove nulls (duplicate skips)

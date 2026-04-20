@@ -10,7 +10,7 @@ public record UserRegisterRequestDTO(
         String username,
         @Email(message = "Enter a valid Email address.")
         String email,
-        @Size(min = 6, max = 18, message = "Password must be of size 6 - 18 characters.")
+        @Size(min = 8, message = "Password must be of at least 8 characters")
         String password,
         @NotNull
         @Size(min = 3, max = 18, message = "Name must be between 6 - 18 characters")
