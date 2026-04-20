@@ -27,6 +27,10 @@ public class UserRegisterService {
             throw new CustomRuntimeException("Email already exists");
         }
 
+        if(userRepository.  existsByUsername(userRegisterRequestDTO.username())) {
+            throw new CustomRuntimeException("Username is already taken");
+        }
+
         user.setUsername(userRegisterRequestDTO.username());
         user.setEmail(userRegisterRequestDTO.email());
         user.setName(userRegisterRequestDTO.name());
