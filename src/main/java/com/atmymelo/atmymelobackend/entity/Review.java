@@ -28,5 +28,7 @@ public class Review {
     @Column(columnDefinition = "TEXT")
     private String content;
 
+    private Integer rating;
+
     private LocalDateTime createdAt;
 }

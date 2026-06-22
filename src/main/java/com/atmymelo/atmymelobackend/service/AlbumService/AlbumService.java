@@ -106,6 +106,7 @@ public class AlbumService {
     }
 
     // OPEN THE ALBUM PAGE USING THE MBID FROM THE SEARCH RESULTS FROM THE AUDIO DB API
+
     public AlbumResponseDTO getAlbumByMbid(String mbid, UUID userId) {
 
         Optional<Album> existing = albumRepository.findById(mbid);

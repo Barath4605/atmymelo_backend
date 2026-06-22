@@ -37,6 +37,8 @@ public class ReviewService {
         review.setContent(reviewDto.review());
         review.setCreatedAt(LocalDateTime.now());
 
+        review.setRating(userAlbum.getRating());
+
         reviewRepository.save(review);
 
         return new ReviewResponseDTO(review.getContent(),album ,review.getCreatedAt(), review.getId());
@@ -63,6 +65,7 @@ public class ReviewService {
                         review.getAlbum().getTitle(),
                         review.getAlbum().getId(),
                         review.getAlbum().getImageUrl(),
+                        review.getRating(),
 
                         // ARTIST
                         review.getAlbum().getArtist().getName(),
@@ -96,6 +99,7 @@ public class ReviewService {
                         review.getAlbum().getTitle(),
                         review.getAlbum().getId(),
                         review.getAlbum().getImageUrl(),
+                        review.getRating(),
 
                         // ARTIST
                         review.getAlbum().getArtist().getName(),

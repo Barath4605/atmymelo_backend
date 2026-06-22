@@ -67,12 +67,17 @@ public class ArtistAlbumService {
 
         album.setTitle(dto.strAlbum());
         album.setImageUrl(dto.strAlbumThumb());
-        album.setGenre(dto.strGenre());
+
+        String genre = dto.strGenre();
+        if(genre == null || genre.isBlank()) genre = "Other";
+        album.setGenre(genre);
+
 
         if (dto.strDescription() != null && !dto.strDescription().isBlank()) {
             album.setDescription(dto.strDescription());
+        } else {
+            album.setDescription("No description available");
         }
-
         album.setArtist(artist);
 
         if (dto.intYearReleased() != null) {
