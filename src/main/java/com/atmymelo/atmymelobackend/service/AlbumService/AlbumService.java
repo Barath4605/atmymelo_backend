@@ -106,13 +106,12 @@ public class AlbumService {
     }
 
     // OPEN THE ALBUM PAGE USING THE MBID FROM THE SEARCH RESULTS FROM THE AUDIO DB API
-
     public AlbumResponseDTO getAlbumByMbid(String mbid, UUID userId) {
 
         Optional<Album> existing = albumRepository.findById(mbid);
         if (existing.isPresent()) {
-            UserAlbum userAlbum =
-                    userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
+            UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
+            // IF ALBUM IS IN ALBUM REPO , OPEN USER-ALBUM FOR THE ALBUM
 
             Integer rating = 0;
             Boolean isFavorite = false;
@@ -132,6 +131,7 @@ public class AlbumService {
 
         String albumUrl = "https://www.theaudiodb.com/api/v1/json/123/album-mb.php?i=" + mbid;
         Map albumResponse = restTemplate.getForObject(albumUrl, Map.class);
+        // IF ALBUM DOES NOT EXIST IN THE REPO THEN FETCH IT.
 
         if (albumResponse == null || albumResponse.get("album") == null) {
             throw new CustomRuntimeException("Album not found");
@@ -158,6 +158,7 @@ public class AlbumService {
             } else {
                 String artistUrl = "https://www.theaudiodb.com/api/v1/json/123/artist-mb.php?i=" + artistMbid;
                 Map artistResponse = restTemplate.getForObject(artistUrl, Map.class);
+                // IF ARTIST DOES NOT EXIST FETCH
 
                 if (artistResponse != null && artistResponse.get("artists") != null) {
                     List<Map<String, Object>> artists =

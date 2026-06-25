@@ -18,11 +18,13 @@ public class AlbumController {
     private final AlbumService albumService;
     private final JwtUtil jwtUtil;
 
+    // ALBUM SEARCH
     @GetMapping("/albums/search")
     public List<AlbumSearchDTO> search(@RequestParam String query) {
         return albumService.searchAlbums(query);
     }
 
+    // OPEN ALBUM PAGE
     @GetMapping("/albums/{mbid}")
     public AlbumResponseDTO getAlbum(@PathVariable String mbid,
                                      @RequestHeader("Authorization") String authHeader) {

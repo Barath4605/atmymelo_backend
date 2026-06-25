@@ -21,10 +21,10 @@ public record AllReviewResponseDTO(
         String albumId,
         String albumUrl,
         Integer rating,
+        Integer likes,
 
         // ARTIST
         String artist,
         String artistId
 
-) {
-}
+) {}

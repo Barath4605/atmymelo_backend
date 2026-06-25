@@ -3,6 +3,7 @@ package com.atmymelo.atmymelobackend.controller.AlbumController;
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.AllReviewResponseDTO;
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewRequestDTO;
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewResponseDTO;
+import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.TotalLikeAndIsLikedDTO;
 import com.atmymelo.atmymelobackend.service.AlbumService.ReviewService;
 import com.atmymelo.atmymelobackend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,7 @@ public class ReviewController {
         return new ResponseEntity<>(reviewService.review(dto, userId, mbid), HttpStatus.OK);
     }
 
-    // FETCH ALL REVIEWS
+    // FETCH ALL REVIEWS FROM USER
     @GetMapping("/{mbid}/all-reviews")
     public ResponseEntity<List<AllReviewResponseDTO>> allReviews(@RequestHeader("Authorization") String authHeader,
                                                                  @PathVariable String mbid) {
@@ -53,6 +54,31 @@ public class ReviewController {
         return ResponseEntity.ok(reviews);
     }
 
+    // LIKE REVIEW
+    @PostMapping("/reviews/{reviewId}/likes")
+    public ResponseEntity<Boolean> reviewLike( @PathVariable UUID reviewId,
+                                               @RequestHeader("Authorization") String authHeader) {
+
+        System.out.println("called");
+
+        UUID userId = jwtUtil.extractUserId(authHeader);
+        boolean liked = reviewService.toggleLike(reviewId, userId);
+
+        return ResponseEntity.ok(liked);
+    }
+
+    // TOTAL LIKES FOR A REVIEW AND HAS USED LIKED THE REVIEW
+    @GetMapping("reviews/{reviewId}/likes/total-likes")
+    public ResponseEntity<TotalLikeAndIsLikedDTO> getTotalLikes(@PathVariable UUID reviewId,
+                                                                @RequestHeader("Authorization") String authHeader
+    ) {
+
+        UUID userId = jwtUtil.extractUserId(authHeader);
+        TotalLikeAndIsLikedDTO totalLike = reviewService.getTotalLike(reviewId, userId);
+
+        return ResponseEntity.ok(totalLike);
+    }
+
 
     // DELETE REVIEW
     @DeleteMapping("/delete-review/{reviewId}")
@@ -62,6 +88,4 @@ public class ReviewController {
         UUID userId = jwtUtil.extractUserId(authHeader);
         reviewService.deleteReview(reviewId,userId);
     }
-
-
 }
