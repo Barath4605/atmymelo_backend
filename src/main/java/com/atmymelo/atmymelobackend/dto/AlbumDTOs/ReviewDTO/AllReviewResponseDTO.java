@@ -1,7 +1,5 @@
 package com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO;
 
-import com.atmymelo.atmymelobackend.entity.Review;
-
 import java.time.LocalDateTime;
 import java.util.UUID;
 

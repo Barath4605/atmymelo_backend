@@ -2,7 +2,7 @@ package com.atmymelo.atmymelobackend.service.ProfileService;
 
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomIllegalStateException;
 import com.atmymelo.atmymelobackend.dto.ProfileDTO.ProfileResponseDTO;
-import com.atmymelo.atmymelobackend.entity.User;
+import com.atmymelo.atmymelobackend.entity.UserEntity.User;
 import com.atmymelo.atmymelobackend.repository.ReviewRepository;
 import com.atmymelo.atmymelobackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

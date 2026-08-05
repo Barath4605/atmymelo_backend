@@ -1,6 +1,6 @@
 package com.atmymelo.atmymelobackend.controller.AlbumController;
 
-import com.atmymelo.atmymelobackend.entity.Album;
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 import com.atmymelo.atmymelobackend.service.AlbumService.ArtistAlbumService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

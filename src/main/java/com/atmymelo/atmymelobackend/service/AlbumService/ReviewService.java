@@ -4,13 +4,16 @@ import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.AllReviewResponseDTO
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewRequestDTO;
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewResponseDTO;
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.TotalLikeAndIsLikedDTO;
-import com.atmymelo.atmymelobackend.entity.*;
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.UserAlbum;
+import com.atmymelo.atmymelobackend.entity.ReviewEntity.Review;
+import com.atmymelo.atmymelobackend.entity.ReviewEntity.ReviewLike;
+import com.atmymelo.atmymelobackend.entity.UserEntity.User;
 import com.atmymelo.atmymelobackend.repository.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -25,7 +28,7 @@ public class ReviewService {
     private final ReviewLikeRepository reviewLikeRepository;
     private final UserRepository userRepository;
 
-    // USER POST REVIEW
+    // USER POST REVIEW --> NEW LISTEN
     public ReviewResponseDTO review(ReviewRequestDTO reviewDto, UUID userId, String mbid) {
 
         Review review = new Review();
@@ -36,7 +39,7 @@ public class ReviewService {
         review.setUser(userAlbum.getUser());
 
         review.setContent(reviewDto.review());
-        review.setCreatedAt(LocalDateTime.now());
+        review.setCreatedAt(reviewDto.date());
 
         review.setRating(userAlbum.getRating());
 
@@ -47,6 +50,28 @@ public class ReviewService {
         return new ReviewResponseDTO(review.getContent(),album ,review.getCreatedAt(), review.getId());
 
     }
+
+    // USER POST REVIEW --> ALREADY LISTENED / USER CHOOSE DATE
+//    public ReviewResponseDTO reviewRelisten(ReviewRequestDTO reviewDto, UUID userId, String mbid) {
+//
+//        Review review = new Review();
+//        UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
+//        Album album = albumRepository.getById(mbid);
+//
+//        review.setAlbum(userAlbum.getAlbum());
+//        review.setUser(userAlbum.getUser());
+//
+//        review.setContent(reviewDto.review());
+//        review.setCreatedAt(reviewDto.date());
+//
+//        review.setRating(userAlbum.getRating());
+//
+//        review.setLikes(0);
+//
+//        reviewRepository.save(review);
+//
+//        return new ReviewResponseDTO(review.getContent(), album, review.getCreatedAt(), review.getId());
+//    }
 
     // FETCH ALL REVIEWS
     public List<AllReviewResponseDTO> allReviews(UUID userId, String mbid) {

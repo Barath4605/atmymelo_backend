@@ -1,7 +1,7 @@
 package com.atmymelo.atmymelobackend.repository;
 
-import com.atmymelo.atmymelobackend.entity.Review;
-import com.atmymelo.atmymelobackend.entity.ReviewLike;
+import com.atmymelo.atmymelobackend.entity.ReviewEntity.Review;
+import com.atmymelo.atmymelobackend.entity.ReviewEntity.ReviewLike;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;

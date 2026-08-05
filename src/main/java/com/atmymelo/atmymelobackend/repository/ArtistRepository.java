@@ -1,6 +1,6 @@
 package com.atmymelo.atmymelobackend.repository;
 
-import com.atmymelo.atmymelobackend.entity.Artist;
+import com.atmymelo.atmymelobackend.entity.ArtistEntity.Artist;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

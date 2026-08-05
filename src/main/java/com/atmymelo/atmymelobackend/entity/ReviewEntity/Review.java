@@ -1,12 +1,12 @@
-package com.atmymelo.atmymelobackend.entity;
+package com.atmymelo.atmymelobackend.entity.ReviewEntity;
 
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
+import com.atmymelo.atmymelobackend.entity.UserEntity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 @Entity

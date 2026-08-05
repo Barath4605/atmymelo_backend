@@ -1,5 +1,6 @@
-package com.atmymelo.atmymelobackend.entity;
+package com.atmymelo.atmymelobackend.entity.AlbumEntity;
 
+import com.atmymelo.atmymelobackend.entity.ArtistEntity.Artist;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

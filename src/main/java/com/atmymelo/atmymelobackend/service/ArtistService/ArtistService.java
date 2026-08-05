@@ -1,7 +1,7 @@
 package com.atmymelo.atmymelobackend.service.ArtistService;
 
 import com.atmymelo.atmymelobackend.dto.ArtistSearchResponseDTO;
-import com.atmymelo.atmymelobackend.entity.Artist;
+import com.atmymelo.atmymelobackend.entity.ArtistEntity.Artist;
 import com.atmymelo.atmymelobackend.repository.ArtistRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;

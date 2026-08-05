@@ -22,7 +22,7 @@ public class ReviewController {
     private final JwtUtil jwtUtil;
     private final ReviewService reviewService;
 
-    //REVIEW
+    //REVIEW FIRST LISTEN
     @PostMapping("/{mbid}/review")
     public ResponseEntity<ReviewResponseDTO> review(@RequestBody ReviewRequestDTO dto,
                                                     @RequestHeader("Authorization") String authHeader,

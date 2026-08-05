@@ -2,8 +2,8 @@ package com.atmymelo.atmymelobackend.service.AlbumService;
 
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ArtistAlbumsDTO.AudioDbAlbumDTO;
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ArtistAlbumsDTO.AudioDbResponseDTO;
-import com.atmymelo.atmymelobackend.entity.Album;
-import com.atmymelo.atmymelobackend.entity.Artist;
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
+import com.atmymelo.atmymelobackend.entity.ArtistEntity.Artist;
 import com.atmymelo.atmymelobackend.repository.AlbumRepository;
 import com.atmymelo.atmymelobackend.repository.ArtistRepository;
 import com.atmymelo.atmymelobackend.service.TadbClient.AudioDbClient;

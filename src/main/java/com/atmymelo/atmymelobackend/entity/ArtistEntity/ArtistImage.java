@@ -1,4 +1,4 @@
-package com.atmymelo.atmymelobackend.entity;
+package com.atmymelo.atmymelobackend.entity.ArtistEntity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

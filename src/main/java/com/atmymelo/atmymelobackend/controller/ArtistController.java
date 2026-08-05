@@ -1,7 +1,7 @@
 package com.atmymelo.atmymelobackend.controller;
 
 import com.atmymelo.atmymelobackend.dto.ArtistSearchResponseDTO;
-import com.atmymelo.atmymelobackend.entity.Artist;
+import com.atmymelo.atmymelobackend.entity.ArtistEntity.Artist;
 import com.atmymelo.atmymelobackend.service.ArtistService.ArtistService;
 import org.springframework.web.bind.annotation.*;
 

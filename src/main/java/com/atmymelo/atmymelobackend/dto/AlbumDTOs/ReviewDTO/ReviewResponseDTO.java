@@ -1,6 +1,6 @@
 package com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO;
 
-import com.atmymelo.atmymelobackend.entity.Album;
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 import jakarta.validation.constraints.NotBlank;
 
 import java.time.LocalDateTime;

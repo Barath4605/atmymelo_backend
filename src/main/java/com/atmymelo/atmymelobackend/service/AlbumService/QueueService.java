@@ -1,7 +1,7 @@
 package com.atmymelo.atmymelobackend.service.AlbumService;
 
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.FavoriteDTO.FavoriteGenreResponseDTO;
-import com.atmymelo.atmymelobackend.entity.UserAlbum;
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.UserAlbum;
 import com.atmymelo.atmymelobackend.repository.UserAlbumRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

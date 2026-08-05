@@ -3,7 +3,7 @@ package com.atmymelo.atmymelobackend.service.UserServices;
 import com.atmymelo.atmymelobackend.config.Exceptions.CustomIllegalArgumentException;
 import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginRequestDTO;
 import com.atmymelo.atmymelobackend.dto.UserDTOs.UserLoginResponseDTO;
-import com.atmymelo.atmymelobackend.entity.User;
+import com.atmymelo.atmymelobackend.entity.UserEntity.User;
 import com.atmymelo.atmymelobackend.repository.UserRepository;
 import com.atmymelo.atmymelobackend.service.JwtService;
 import lombok.RequiredArgsConstructor;
