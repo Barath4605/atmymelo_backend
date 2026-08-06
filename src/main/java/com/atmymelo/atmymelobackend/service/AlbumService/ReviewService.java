@@ -28,12 +28,15 @@ public class ReviewService {
     private final ReviewLikeRepository reviewLikeRepository;
     private final UserRepository userRepository;
 
-    // USER POST REVIEW --> NEW LISTEN
+    // USER POST REVIEW
     public ReviewResponseDTO review(ReviewRequestDTO reviewDto, UUID userId, String mbid) {
 
         Review review = new Review();
         UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId,mbid);
         Album album = albumRepository.getById(mbid);
+
+        boolean relisten = reviewRepository.existsByUserAndAlbum(userAlbum.getUser(), album);
+        review.setRelisten(relisten);
 
         review.setAlbum(userAlbum.getAlbum());
         review.setUser(userAlbum.getUser());
@@ -47,31 +50,9 @@ public class ReviewService {
 
         reviewRepository.save(review);
 
-        return new ReviewResponseDTO(review.getContent(),album ,review.getCreatedAt(), review.getId());
+        return new ReviewResponseDTO(review.getContent(),album ,review.getCreatedAt(), review.getId(), relisten);
 
     }
-
-    // USER POST REVIEW --> ALREADY LISTENED / USER CHOOSE DATE
-//    public ReviewResponseDTO reviewRelisten(ReviewRequestDTO reviewDto, UUID userId, String mbid) {
-//
-//        Review review = new Review();
-//        UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
-//        Album album = albumRepository.getById(mbid);
-//
-//        review.setAlbum(userAlbum.getAlbum());
-//        review.setUser(userAlbum.getUser());
-//
-//        review.setContent(reviewDto.review());
-//        review.setCreatedAt(reviewDto.date());
-//
-//        review.setRating(userAlbum.getRating());
-//
-//        review.setLikes(0);
-//
-//        reviewRepository.save(review);
-//
-//        return new ReviewResponseDTO(review.getContent(), album, review.getCreatedAt(), review.getId());
-//    }
 
     // FETCH ALL REVIEWS
     public List<AllReviewResponseDTO> allReviews(UUID userId, String mbid) {
@@ -84,6 +65,7 @@ public class ReviewService {
                         review.getContent(),
                         review.getCreatedAt(),
                         review.getId(),
+                        review.getRelisten(),
 
                         // USER
                         review.getUser().getId(),
@@ -163,6 +145,7 @@ public class ReviewService {
                         review.getContent(),
                         review.getCreatedAt(),
                         review.getId(),
+                        review.getRelisten(),
 
                         // USER
                         review.getUser().getId(),

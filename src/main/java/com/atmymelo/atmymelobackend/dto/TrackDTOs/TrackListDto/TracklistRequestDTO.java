@@ -1,4 +1,4 @@
-package com.atmymelo.atmymelobackend.dto.TrackDTOs;
+package com.atmymelo.atmymelobackend.dto.TrackDTOs.TrackListDto;
 
 public record TracklistRequestDTO(
 
@@ -6,6 +6,7 @@ public record TracklistRequestDTO(
         String strAlbum,
         String strArtist,
         String intDuration,
-        String strMusicBrainzAlbumID
+        String idTrack,
+        String intTrackNumber
 
 ) {}

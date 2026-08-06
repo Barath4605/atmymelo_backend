@@ -1,6 +1,6 @@
 package com.atmymelo.atmymelobackend.service.TracklistService;
 
-import com.atmymelo.atmymelobackend.dto.TrackDTOs.TracklistResponseDTO;
+import com.atmymelo.atmymelobackend.dto.TrackDTOs.TrackListDto.TracklistResponseDTO;
 import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 import com.atmymelo.atmymelobackend.repository.AlbumRepository;
 import com.atmymelo.atmymelobackend.service.TadbClient.AudioDbClient;

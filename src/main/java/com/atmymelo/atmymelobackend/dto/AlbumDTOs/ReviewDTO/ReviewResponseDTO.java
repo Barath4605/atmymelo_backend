@@ -12,6 +12,7 @@ public record ReviewResponseDTO(
         String review,
         Album album,
         LocalDateTime reviewDate,
-        UUID reviewId
+        UUID reviewId,
+        Boolean relisten
 ) {
 }

@@ -1,8 +1,7 @@
 package com.atmymelo.atmymelobackend.service.TadbClient;
 
 import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ArtistAlbumsDTO.AudioDbResponseDTO;
-import com.atmymelo.atmymelobackend.dto.TrackDTOs.TrackApiResponse;
-import com.atmymelo.atmymelobackend.dto.TrackDTOs.TracklistResponseDTO;
+import com.atmymelo.atmymelobackend.dto.TrackDTOs.TrackListDto.TracklistResponseDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;

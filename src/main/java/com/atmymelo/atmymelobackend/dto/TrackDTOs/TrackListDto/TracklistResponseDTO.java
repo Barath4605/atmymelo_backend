@@ -1,4 +1,4 @@
-package com.atmymelo.atmymelobackend.dto.TrackDTOs;
+package com.atmymelo.atmymelobackend.dto.TrackDTOs.TrackListDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

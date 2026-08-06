@@ -23,6 +23,8 @@ public class Review {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    private Boolean relisten;
+
     @ManyToOne
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;

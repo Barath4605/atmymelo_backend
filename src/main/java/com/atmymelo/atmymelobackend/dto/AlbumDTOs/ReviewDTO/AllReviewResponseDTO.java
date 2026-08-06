@@ -9,6 +9,7 @@ public record AllReviewResponseDTO(
         String content,
         LocalDateTime createdAt,
         UUID reviewId,
+        Boolean relisten,
 
         // USER
         UUID userId,

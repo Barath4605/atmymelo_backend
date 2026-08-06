@@ -1,4 +1,4 @@
-package com.atmymelo.atmymelobackend.entity;
+package com.atmymelo.atmymelobackend.entity.TracklistEntity;
 
 import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 import com.atmymelo.atmymelobackend.entity.ArtistEntity.Artist;
@@ -24,11 +24,20 @@ public class Tracklist {
 
     private String duration;
 
+    private String trackNumber;
+
+    private Integer ratingCount;
+
+    private Integer ratingSum;
+
+    @Column(unique = true)
+    private String tadbTrackId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Album album;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn
     private Artist artist;
 
