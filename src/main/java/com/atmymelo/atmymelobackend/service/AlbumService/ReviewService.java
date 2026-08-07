@@ -55,7 +55,7 @@ public class ReviewService {
     }
 
     // FETCH ALL REVIEWS
-    public List<AllReviewResponseDTO> allReviews(UUID userId, String mbid) {
+    public List<AllReviewResponseDTO> allUserReviews(UUID userId, String mbid) {
 
         List<Review> reviews = reviewRepository.findAllByUserIdAndAlbumId(userId, mbid);
 
@@ -82,8 +82,37 @@ public class ReviewService {
                         review.getAlbum().getArtist().getName(),
                         review.getAlbum().getArtist().getId()
                 ))
-                .toList();
+        .toList();
+    }
 
+    // GET ALL REVIEWS / SORT IT BY POPULARITY
+    public List<AllReviewResponseDTO>  allReviews(String mbid) {
+        List<Review> allReviews = reviewRepository.findAllByAlbumIdOrderByLikesDesc(mbid);
+
+        return allReviews.stream()
+                .map(review -> new AllReviewResponseDTO(
+                        // REVIEW
+                        review.getContent(),
+                        review.getCreatedAt(),
+                        review.getId(),
+                        review.getRelisten(),
+
+                        // USER
+                        review.getUser().getId(),
+                        review.getUser().getUsername(),
+
+                        // ALBUM
+                        review.getAlbum().getTitle(),
+                        review.getAlbum().getId(),
+                        review.getAlbum().getImageUrl(),
+                        review.getRating(),
+                        review.getLikes(),
+
+                        // ARTIST
+                        review.getAlbum().getArtist().getName(),
+                        review.getAlbum().getArtist().getId()
+                ))
+                .toList();
     }
 
     //LIKE REVIEW

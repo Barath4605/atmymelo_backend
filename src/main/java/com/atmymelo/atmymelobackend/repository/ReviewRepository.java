@@ -14,4 +14,6 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
     List<Review> findTop3ByUserIdAndAlbumIdOrderByCreatedAtDesc(UUID userId, String albumId);
 
     boolean existsByUserAndAlbum(User user, Album album);
+
+    List<Review> findAllByAlbumIdOrderByLikesDesc(String albumId);
 }

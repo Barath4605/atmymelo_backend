@@ -34,14 +34,24 @@ public class ReviewController {
     }
 
     // FETCH ALL REVIEWS FROM USER
-    @GetMapping("/{mbid}/all-reviews")
-    public ResponseEntity<List<AllReviewResponseDTO>> allReviews(@RequestHeader("Authorization") String authHeader,
-                                                                 @PathVariable String mbid) {
+    @GetMapping("/{mbid}/all-user-reviews")
+    public ResponseEntity<List<AllReviewResponseDTO>> allUserReviews(@RequestHeader("Authorization") String authHeader,
+                                                                     @PathVariable String mbid) {
 
         UUID userId = jwtUtil.extractUserId(authHeader);
-        List<AllReviewResponseDTO> reviews = reviewService.allReviews(userId, mbid);
+        List<AllReviewResponseDTO> reviews = reviewService.allUserReviews(userId, mbid);
 
         return ResponseEntity.ok(reviews);
+    }
+
+    // FETCH ALL REVIEWS / SORTED BY POPULARITY (LIKES)
+    @GetMapping("/{mbid}/all-reviews")
+    public ResponseEntity<List<AllReviewResponseDTO>> allReviews(@PathVariable String mbid) {
+
+        List<AllReviewResponseDTO> reviews = reviewService.allReviews(mbid);
+
+        return ResponseEntity.ok(reviews);
+
     }
 
     // FETCH LAST 3 REVIEWS
