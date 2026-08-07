@@ -13,6 +13,7 @@ import com.atmymelo.atmymelobackend.repository.UserRepository;
 import com.atmymelo.atmymelobackend.repository.UserTrackRepository;
 import com.atmymelo.atmymelobackend.service.TadbClient.AudioDbClient;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -118,27 +119,35 @@ public class TracklistService {
         return new UserTrackRequestDto(userTrack.getRating(), userTrack.getFavorite());
     }
 
-        // FETCH THE AVERAGE RATING AND THE USER RATING FOR TRACKS
-        public UserTrackResponseDto getUserRating(String tadbId,
-                                                  UUID userId) {
+    // FETCH THE AVERAGE RATING AND THE USER RATING FOR TRACKS
+    public UserTrackResponseDto getUserRating(String tadbId,
+                                              UUID userId) {
 
-            Tracklist tracklist = tracklistRepository.findTracklistByTadbTrackId(tadbId);
+        Tracklist tracklist = tracklistRepository.findTracklistByTadbTrackId(tadbId);
 
-            Double average = 0.0;
+        Double average = 0.0;
 
-            if(tracklist.getRatingCount() > 0){
-                average = (double) tracklist.getRatingSum()
-                        / tracklist.getRatingCount();
-            }
-
-            UserTrack usertrack = userTrackRepository.getUserTrackByUser_IdAndTracklist_TadbTrackId(userId, tracklist.getTadbTrackId());
-            Integer userRating = null;
-
-            if(usertrack != null){
-                userRating = usertrack.getRating();
-            }
-
-            return new UserTrackResponseDto(userRating,average);
-
+        if(tracklist.getRatingCount() > 0){
+            average = (double) tracklist.getRatingSum()
+                    / tracklist.getRatingCount();
         }
+
+        UserTrack usertrack = userTrackRepository.getUserTrackByUser_IdAndTracklist_TadbTrackId(userId, tracklist.getTadbTrackId());
+        Integer userRating = null;
+
+        if(usertrack != null){
+            userRating = usertrack.getRating();
+        }
+
+        return new UserTrackResponseDto(userRating,average);
+
+    }
+
+    // GET THE TOP SONG FROM THE ALBUM TRACKLIST
+    public String getTopTrack(String mbid) {
+
+        return tracklistRepository
+                .findTopRatedTrackId(mbid, PageRequest.of(0,1))
+                .get(0);
+    }
 }

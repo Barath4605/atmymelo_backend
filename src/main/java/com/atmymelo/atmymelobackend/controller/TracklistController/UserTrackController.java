@@ -5,6 +5,7 @@ import com.atmymelo.atmymelobackend.dto.TrackDTOs.UserTrackResponseDto;
 import com.atmymelo.atmymelobackend.service.TracklistService.TracklistService;
 import com.atmymelo.atmymelobackend.util.JwtUtil;
 import lombok.AllArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
@@ -17,6 +18,7 @@ public class UserTrackController {
     private final TracklistService tracklistService;
     private final JwtUtil jwtUtil;
 
+    // POST USER RATING
     @PostMapping("/rate-track/{tadbId}")
     public UserTrackRequestDto userRating(@PathVariable String tadbId,
                                           @RequestBody UserTrackRequestDto userTrackRequestDto,
@@ -27,6 +29,7 @@ public class UserTrackController {
         return tracklistService.userRating(userTrackRequestDto, tadbId,  userId);
     }
 
+    // FETCH THE AVERAGE RATING AND THE USER RATING
     @GetMapping("/get-track-rating/{tadbId}")
     public UserTrackResponseDto getTrackRating(@PathVariable String tadbId,
                                                @RequestHeader("Authorization") String authHeader){
@@ -34,6 +37,13 @@ public class UserTrackController {
         UUID userId = jwtUtil.extractUserId(authHeader);
 
         return tracklistService.getUserRating(tadbId, userId);
+    }
+
+    // FETCH THE HIGHEST RATED SONG FROM THE ALBUM TRACKLIST
+    @GetMapping("/get-highest-avg-song/{mbid}")
+    public ResponseEntity<String> getTopTrack(@PathVariable String mbid) {
+
+        return ResponseEntity.ok(tracklistService.getTopTrack(mbid));
     }
 
 
