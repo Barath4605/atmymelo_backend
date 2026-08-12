@@ -152,10 +152,13 @@ public class ReviewService {
 
     }
 
+    // GET ALL THE USERS WHO LIKED A REVIEW
     public LikedUsersDto getLikedUsers(UUID reviewId) {
 
-        List<ReviewLike> likes = reviewLikeRepository.findAllByReviewId(reviewId);
+        List<ReviewLike> likes =
+                reviewLikeRepository.findAllByReviewId(reviewId);
 
+        // No likes
         if (likes.isEmpty()) {
             return new LikedUsersDto(
                     null,
@@ -163,43 +166,56 @@ public class ReviewService {
             );
         }
 
+        // Get review and album
         Review review = likes.get(0).getReview();
         Album album = review.getAlbum();
 
         // ALBUM + ARTIST
-        LikedUsersDto.Artist artist = new LikedUsersDto.Artist(
-                album.getArtist().getId(),
-                album.getArtist().getName()
-        );
+        LikedUsersDto.Artist artist =
+                new LikedUsersDto.Artist(
+                        album.getArtist().getId(),
+                        album.getArtist().getName()
+                );
 
-        LikedUsersDto.Album albumDto = new LikedUsersDto.Album(
-                album.getId(),
-                album.getTitle(),
-                album.getImageUrl(),
-                artist
-        );
+        LikedUsersDto.Album albumDto =
+                new LikedUsersDto.Album(
+                        album.getId(),
+                        album.getTitle(),
+                        album.getImageUrl(),
+                        artist
+                );
 
         // LIKED USERS
-        List<LikedUsersDto.LikedUser> likedUsers = likes.stream()
-                .map(like -> {
+        List<LikedUsersDto.LikedUser> likedUsers =
+                likes.stream()
+                        .map(like -> {
 
-                    User user = like.getUser();
+                            User user = like.getUser();
 
-                    UserAlbum userAlbum =
-                            userAlbumRepository.findByUserAndAlbum(user, album);
+                            UserAlbum userAlbum =
+                                    userAlbumRepository.findByUserAndAlbum(
+                                            user,
+                                            album
+                                    );
 
-                    if (userAlbum == null) {
-                        throw new RuntimeException("UserAlbum not found");
-                    }
+                            // User can like a review even if they don't
+                            // have a UserAlbum entry for this album.
+                            Integer rating = null;
+                            Boolean isFavorite = null;
 
-                    return new LikedUsersDto.LikedUser(
-                            user.getId(),
-                            user.getUsername(),
-                            userAlbum.getRating(),
-                            userAlbum.getIsFavorite()
-                    );
-                })
-                .toList();
+                            if (userAlbum != null) {
+                                rating = userAlbum.getRating();
+                                isFavorite = userAlbum.getIsFavorite();
+                            }
+
+                            return new LikedUsersDto.LikedUser(
+                                    user.getId(),
+                                    user.getUsername(),
+                                    rating,
+                                    isFavorite
+                            );
+                        })
+                        .toList();
 
         return new LikedUsersDto(
                 albumDto,
