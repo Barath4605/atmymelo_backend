@@ -1,6 +1,8 @@
 package com.atmymelo.atmymelobackend.repository;
 
+import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 import com.atmymelo.atmymelobackend.entity.AlbumEntity.UserAlbum;
+import com.atmymelo.atmymelobackend.entity.UserEntity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -51,4 +53,5 @@ public interface UserAlbumRepository extends JpaRepository<UserAlbum, Long> {
     """)
     List<UserAlbum> findQueueByGenre(UUID userId, String genre);
 
+    UserAlbum findByUserAndAlbum(User user, Album album);
 }

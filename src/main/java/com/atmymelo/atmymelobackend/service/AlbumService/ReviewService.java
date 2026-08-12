@@ -1,9 +1,6 @@
 package com.atmymelo.atmymelobackend.service.AlbumService;
 
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.AllReviewResponseDTO;
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewRequestDTO;
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewResponseDTO;
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.TotalLikeAndIsLikedDTO;
+import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.*;
 import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 import com.atmymelo.atmymelobackend.entity.AlbumEntity.UserAlbum;
 import com.atmymelo.atmymelobackend.entity.ReviewEntity.Review;
@@ -153,6 +150,61 @@ public class ReviewService {
                 isLiked
         );
 
+    }
+
+    public LikedUsersDto getLikedUsers(UUID reviewId) {
+
+        List<ReviewLike> likes = reviewLikeRepository.findAllByReviewId(reviewId);
+
+        if (likes.isEmpty()) {
+            return new LikedUsersDto(
+                    null,
+                    List.of()
+            );
+        }
+
+        Review review = likes.get(0).getReview();
+        Album album = review.getAlbum();
+
+        // ALBUM + ARTIST
+        LikedUsersDto.Artist artist = new LikedUsersDto.Artist(
+                album.getArtist().getId(),
+                album.getArtist().getName()
+        );
+
+        LikedUsersDto.Album albumDto = new LikedUsersDto.Album(
+                album.getId(),
+                album.getTitle(),
+                album.getImageUrl(),
+                artist
+        );
+
+        // LIKED USERS
+        List<LikedUsersDto.LikedUser> likedUsers = likes.stream()
+                .map(like -> {
+
+                    User user = like.getUser();
+
+                    UserAlbum userAlbum =
+                            userAlbumRepository.findByUserAndAlbum(user, album);
+
+                    if (userAlbum == null) {
+                        throw new RuntimeException("UserAlbum not found");
+                    }
+
+                    return new LikedUsersDto.LikedUser(
+                            user.getId(),
+                            user.getUsername(),
+                            userAlbum.getRating(),
+                            userAlbum.getIsFavorite()
+                    );
+                })
+                .toList();
+
+        return new LikedUsersDto(
+                albumDto,
+                likedUsers
+        );
     }
 
     // DELETE REVIEW

@@ -1,9 +1,6 @@
 package com.atmymelo.atmymelobackend.controller.AlbumController;
 
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.AllReviewResponseDTO;
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewRequestDTO;
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.ReviewResponseDTO;
-import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.TotalLikeAndIsLikedDTO;
+import com.atmymelo.atmymelobackend.dto.AlbumDTOs.ReviewDTO.*;
 import com.atmymelo.atmymelobackend.service.AlbumService.ReviewService;
 import com.atmymelo.atmymelobackend.util.JwtUtil;
 import lombok.RequiredArgsConstructor;
@@ -87,6 +84,16 @@ public class ReviewController {
         TotalLikeAndIsLikedDTO totalLike = reviewService.getTotalLike(reviewId, userId);
 
         return ResponseEntity.ok(totalLike);
+    }
+
+    // GET THE USERS WHO LIKED THE REVIEW
+    @GetMapping("reviews/{reviewId}/likes/liked-users")
+    public ResponseEntity<LikedUsersDto> getLikedUsers(@PathVariable UUID reviewId) {
+
+        LikedUsersDto likedUsers = reviewService.getLikedUsers(reviewId);
+
+        return ResponseEntity.ok(likedUsers);
+
     }
 
 
