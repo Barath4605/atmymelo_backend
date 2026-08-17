@@ -27,4 +27,16 @@ public interface TracklistRepository extends JpaRepository<Tracklist, UUID> {
             @Param("albumId") String albumId,
             Pageable pageable
     );
+
+    @Query(value = """
+    SELECT *
+    FROM tracklist t
+    WHERE t.artist_id = :artistId
+      AND t.rating_count > 0
+    ORDER BY (t.rating_sum * 1.0 / t.rating_count) DESC
+    LIMIT 10
+    """, nativeQuery = true)
+    List<Tracklist> findTopRatedByArtistId(
+            @Param("artistId") String artistId
+    );
 }
