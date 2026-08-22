@@ -18,7 +18,7 @@ public class UserTrack {
     @Column(nullable = false)
     private UUID id;
 
-    private Integer rating;
+    private Double rating;
 
     private Boolean favorite;
 

@@ -59,7 +59,7 @@ public class TracklistService {
                     track.setTadbTrackId(dto.idTrack());
                     track.setTrackNumber(dto.intTrackNumber());
                     track.setRatingCount(0);
-                    track.setRatingSum(0);
+                    track.setRatingSum(0.0);
 
                     return track;
 
@@ -72,15 +72,20 @@ public class TracklistService {
     }
 
     // GET USER RATING FOR A TRACK
-    public UserTrackRequestDto userRating(UserTrackRequestDto userTrackRequestDto,
-                                          String tadbId,
-                                          UUID userId) {
+    public UserTrackRequestDto userRating(
+            UserTrackRequestDto userTrackRequestDto,
+            String tadbId,
+            UUID userId
+    ) {
 
         Boolean favorite = userTrackRequestDto.favorite();
-        Integer rating = userTrackRequestDto.rating();
+        Double newRating = userTrackRequestDto.rating();
 
-        User user = userRepository.findById(userId).orElseThrow();
-        Tracklist tracklist = tracklistRepository.findTracklistByTadbTrackId(tadbId);
+        User user = userRepository.findById(userId)
+                .orElseThrow();
+
+        Tracklist tracklist =
+                tracklistRepository.findTracklistByTadbTrackId(tadbId);
 
         UserTrack userTrack =
                 userTrackRepository
@@ -89,34 +94,73 @@ public class TracklistService {
                                 tadbId
                         );
 
-        if(userTrack == null){
+        // If no rating was previously created
+        if (userTrack == null) {
+
             userTrack = new UserTrack();
+
             userTrack.setUser(user);
             userTrack.setTracklist(tracklist);
+            userTrack.setCreatedAt(LocalDateTime.now());
 
-            tracklist.setRatingCount(
-                    tracklist.getRatingCount() + 1
-            );
+            // Only count it if the new rating is actually > 0
+            if (newRating != null && newRating > 0) {
+
+                tracklist.setRatingCount(
+                        tracklist.getRatingCount() + 1
+                );
+
+                tracklist.setRatingSum(
+                        tracklist.getRatingSum() + newRating
+                );
+            }
+
         } else {
-            tracklist.setRatingSum(
-                    tracklist.getRatingSum() - userTrack.getRating()
-            );
+
+            Double oldRating = userTrack.getRating() != null
+                    ? userTrack.getRating()
+                    : 0.0;
+
+            // Remove old rating from the aggregate
+            if (oldRating > 0) {
+
+                tracklist.setRatingSum(
+                        tracklist.getRatingSum() - oldRating
+                );
+
+                tracklist.setRatingCount(
+                        Math.max(
+                                0,
+                                tracklist.getRatingCount() - 1
+                        )
+                );
+            }
+
+            // Add new rating to the aggregate
+            if (newRating != null && newRating > 0) {
+
+                tracklist.setRatingSum(
+                        tracklist.getRatingSum() + newRating
+                );
+
+                tracklist.setRatingCount(
+                        tracklist.getRatingCount() + 1
+                );
+            }
         }
 
-        userTrack.setCreatedAt(LocalDateTime.now());
-
         userTrack.setFavorite(favorite);
-        userTrack.setRating(rating);
-
+        userTrack.setRating(newRating);
         userTrack.setUser(user);
         userTrack.setTracklist(tracklist);
-
-        tracklist.setRatingSum(tracklist.getRatingSum() + rating);
 
         userTrackRepository.save(userTrack);
         tracklistRepository.save(tracklist);
 
-        return new UserTrackRequestDto(userTrack.getRating(), userTrack.getFavorite());
+        return new UserTrackRequestDto(
+                userTrack.getRating(),
+                userTrack.getFavorite()
+        );
     }
 
     // FETCH THE AVERAGE RATING AND THE USER RATING FOR TRACKS
@@ -133,7 +177,7 @@ public class TracklistService {
         }
 
         UserTrack usertrack = userTrackRepository.getUserTrackByUser_IdAndTracklist_TadbTrackId(userId, tracklist.getTadbTrackId());
-        Integer userRating = null;
+        Double userRating = null;
 
         if(usertrack != null){
             userRating = usertrack.getRating();
@@ -146,8 +190,14 @@ public class TracklistService {
     // GET THE TOP SONG FROM THE ALBUM TRACKLIST
     public String getTopTrack(String mbid) {
 
-        return tracklistRepository
-                .findTopRatedTrackId(mbid, PageRequest.of(0,1))
-                .get(0);
+        List<String> topTracks =
+                tracklistRepository.findTopRatedTrackId(
+                        mbid,
+                        PageRequest.of(0, 1)
+                );
+
+        return topTracks.isEmpty()
+                ? null
+                : topTracks.get(0);
     }
 }

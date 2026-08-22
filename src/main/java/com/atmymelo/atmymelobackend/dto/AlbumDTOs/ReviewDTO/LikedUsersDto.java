@@ -23,7 +23,7 @@ public record LikedUsersDto(
     public record LikedUser(
             UUID userId,
             String username,
-            Integer rating,
+            Double rating,
             Boolean isFavorite
     ) {}
 }

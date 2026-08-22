@@ -4,7 +4,7 @@ public record FavoriteGenreResponseDTO(
         String albumId,
         String title,
         String artist,
-        int rating,
+        Double rating,
         Integer releaseDate,
         String imageUrl
 ) {}

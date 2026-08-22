@@ -28,7 +28,7 @@ public class Tracklist {
 
     private Integer ratingCount;
 
-    private Integer ratingSum;
+    private Double ratingSum;
 
     @Column(unique = true)
     private String tadbTrackId;

@@ -28,7 +28,7 @@ public class UserAlbum {
     @JoinColumn(name = "album_id", nullable = false)
     private Album album;
 
-    private Integer rating;
+    private Double rating;
 
     @Column(nullable = false)
     private Boolean isFavorite = false;

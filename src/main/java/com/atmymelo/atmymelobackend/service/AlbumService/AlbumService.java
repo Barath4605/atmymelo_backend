@@ -113,14 +113,14 @@ public class AlbumService {
             UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
             // IF ALBUM IS IN ALBUM REPO , OPEN USER-ALBUM FOR THE ALBUM
 
-            Integer rating = 0;
+            Double rating = 0.0;
             Boolean isFavorite = false;
             Boolean inQueue = false;
 
             if (userAlbum != null) {
                 rating = userAlbum.getRating();
                 if(rating == null) {
-                    rating = 0;
+                    rating = 0.0;
                 }
                 isFavorite = userAlbum.getIsFavorite();
                 inQueue = userAlbum.getInQueue();
@@ -219,7 +219,7 @@ public class AlbumService {
         albumRepository.save(album);
         UserAlbum userAlbum = userAlbumRepository.findByUserIdAndAlbumId(userId, mbid);
 
-        Integer rating = 0;
+        Double rating = 0.0;
         Boolean isFavorite = false;
         Boolean inQueue = false;
 

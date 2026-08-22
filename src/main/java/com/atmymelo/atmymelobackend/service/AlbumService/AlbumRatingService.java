@@ -49,7 +49,7 @@ public class AlbumRatingService {
             userAlbum.setAlbum(album);
             userAlbum.setCreatedAt(LocalDateTime.now());
             userAlbum.setUser(user);
-            userAlbum.setRating(0);
+            userAlbum.setRating(0.0);
             userAlbum.setIsFavorite(false);
             userAlbum.setInQueue(false);
         }
@@ -63,7 +63,7 @@ public class AlbumRatingService {
         UserAlbum userAlbum = getOrCreate(userId, mbid);
         // GET THE USER-ALBUM IF DOES NOT EXIST CREATE
 
-        if (rateDto.rating() > 0) userAlbum.setInQueue(false);
+        if (rateDto.rating() > 0.0) userAlbum.setInQueue(false);
         // IF RATED THEN SET QUEUE = FALSE .
 
         userAlbum.setRating(rateDto.rating());
@@ -100,7 +100,7 @@ public class AlbumRatingService {
         // GET THE USER-ALBUM IF DOES NOT EXIST CREATE
 
         boolean isFavorite = Boolean.TRUE.equals(userAlbum.getIsFavorite());
-        int rating = userAlbum.getRating() != null ? userAlbum.getRating() : 0;
+        Double rating = userAlbum.getRating() != null ? userAlbum.getRating() : 0;
 
         if (queueDto.queue() && (isFavorite || rating > 0)) {
             throw new CustomIllegalStateException("Album has been marked reviewed!");

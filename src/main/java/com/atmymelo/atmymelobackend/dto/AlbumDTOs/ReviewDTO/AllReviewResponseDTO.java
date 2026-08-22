@@ -19,7 +19,7 @@ public record AllReviewResponseDTO(
         String albumName,
         String albumId,
         String albumUrl,
-        Integer rating,
+        Double rating,
         Integer likes,
 
         // ARTIST

@@ -200,7 +200,7 @@ public class ReviewService {
 
                             // User can like a review even if they don't
                             // have a UserAlbum entry for this album.
-                            Integer rating = null;
+                            Double rating = null;
                             Boolean isFavorite = null;
 
                             if (userAlbum != null) {

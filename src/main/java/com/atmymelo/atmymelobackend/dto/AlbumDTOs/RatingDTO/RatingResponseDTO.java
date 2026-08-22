@@ -4,6 +4,6 @@ import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 
 public record RatingResponseDTO(
         Album album,
-        int rating
+        Double rating
 ) {
 }

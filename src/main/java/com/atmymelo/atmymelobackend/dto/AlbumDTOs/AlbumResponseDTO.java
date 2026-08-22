@@ -4,7 +4,7 @@ import com.atmymelo.atmymelobackend.entity.AlbumEntity.Album;
 
 public record AlbumResponseDTO(
         Album album,
-        int rating,
-        boolean favorite,
-        boolean queue
+        Double rating,
+        Boolean favorite,
+        Boolean queue
 ) {}
