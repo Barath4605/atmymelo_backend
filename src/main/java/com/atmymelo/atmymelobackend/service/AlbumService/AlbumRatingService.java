@@ -66,6 +66,9 @@ public class AlbumRatingService {
         if (rateDto.rating() > 0.0) userAlbum.setInQueue(false);
         // IF RATED THEN SET QUEUE = FALSE .
 
+        if(rateDto.rating() > 0.0) userAlbum.setUpdatedAt(LocalDateTime.now());
+        // UPDATE THE TIME EVERY TIME THE RATING CHANGES
+
         userAlbum.setRating(rateDto.rating());
         // SET THE RATING TO THE USER-ALBUM
 

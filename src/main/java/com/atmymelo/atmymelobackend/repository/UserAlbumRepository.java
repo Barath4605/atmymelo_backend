@@ -54,4 +54,6 @@ public interface UserAlbumRepository extends JpaRepository<UserAlbum, Long> {
     List<UserAlbum> findQueueByGenre(UUID userId, String genre);
 
     UserAlbum findByUserAndAlbum(User user, Album album);
+
+    List<UserAlbum> findTop5ByUserIdOrderByUpdatedAtDesc(UUID userId);
 }
