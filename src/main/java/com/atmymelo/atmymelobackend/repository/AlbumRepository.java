@@ -11,4 +11,6 @@ public interface AlbumRepository extends JpaRepository<Album, String> {
 
     Optional<Album> findById(String mbid);
 
+
+    List<Album> findByGenre(String genre);
 }

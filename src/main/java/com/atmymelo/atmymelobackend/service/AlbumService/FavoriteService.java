@@ -9,20 +9,33 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
 public class FavoriteService {
 
-    private final UserRepository userRepository;
     private final UserAlbumRepository userAlbumRepository;
 
+
+    // FETCH ALL THE GENRES OF THE USER (IN FAVS)
     public List<String> getUserGenres(UUID userId) {
         List<String> genres = userAlbumRepository.findUserFavoriteGenres(userId);
+        String topUserGenre = genres.get(0);
 
         return genres.stream()
                 .map(genre -> genre == null ? "Other" : genre)
                 .toList();
+    }
+
+    // GET USER'S TOP GENRE
+    public String getUserTopGenre(UUID userId) {
+        List<String> genres = userAlbumRepository.findUserFavoriteGenres(userId);
+
+        if(genres.isEmpty()) return "";
+
+        int random = ThreadLocalRandom.current().nextInt(genres.size());
+        return genres.get(random);
     }
 
     public List<FavoriteGenreResponseDTO> getFavoriteAlbumOnGenre(UUID userId, String genre) {
@@ -30,12 +43,19 @@ public class FavoriteService {
 
         return albums.stream()
                 .map(ua -> new FavoriteGenreResponseDTO(
+
+                        // ALBUM
                         ua.getAlbum().getId(),
                         ua.getAlbum().getTitle(),
-                        ua.getAlbum().getArtist().getName(),
-                        ua.getRating(),
                         ua.getAlbum().getReleaseYear(),
-                        ua.getAlbum().getImageUrl()
+                        ua.getAlbum().getImageUrl(),
+
+                        // ARTIST
+                        ua.getAlbum().getArtist().getName(),
+                        ua.getAlbum().getArtist().getId(),
+
+                        // USER
+                        ua.getRating()
                 )).toList();
 
     }

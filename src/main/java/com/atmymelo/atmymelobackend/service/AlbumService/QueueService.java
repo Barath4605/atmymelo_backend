@@ -15,10 +15,12 @@ public class QueueService {
 
     private final UserAlbumRepository userAlbumRepository;
 
+    // QUEUE GENRES
     public List<String> getUserQueueGenres(UUID userId) {
         return userAlbumRepository.findUserQueueGenres(userId);
     }
 
+    // GET ALL ALBUMS OF THE GENRE IN QUEUE
     public List<FavoriteGenreResponseDTO> getQueueAlbumsByGenre(UUID userId, String genre) {
 
         if (genre == null || genre.isBlank()) {
@@ -30,12 +32,18 @@ public class QueueService {
 
         return albums.stream()
                 .map(ua -> new FavoriteGenreResponseDTO(
+                        // ALBUM
                         ua.getAlbum().getId(),
                         ua.getAlbum().getTitle(),
-                        ua.getAlbum().getArtist().getName(),
-                        ua.getRating(),
                         ua.getAlbum().getReleaseYear(),
-                        ua.getAlbum().getImageUrl()
+                        ua.getAlbum().getImageUrl(),
+
+                        // ARTIST
+                        ua.getAlbum().getArtist().getName(),
+                        ua.getAlbum().getArtist().getId(),
+
+                        // USER
+                        ua.getRating()
                 ))
                 .toList();
     }
